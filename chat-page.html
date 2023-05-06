@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="chat.css" rel="stylesheet">
+    <title>Chat</title>
+</head>
+<body>
+    <!--nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="col-4"></div>
+        <h1 class="col-4 text-center">Travel Bot</h1>
+        <div class="col-4 text-right">Hi username</div>
+    </nav>
+    <!--chat-->
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header"><h4>Chat Name (e.g Paris)</h4></div>
+                    <div class="card-body" style="height: 500px; overflow: auto;">
+                        messages here
+                    </div>
+                    <div class="card-footer">
+                        <form class="form-inline rounded-pill justify-content-end" action="#">
+                            <div class="form-group">
+                                <input type="text" class="form-control mr-2 rounded-pill" placeholder="type message here" name="text">
+                                <button class="btn btn-outline-secondary rounded-pill" type="submit" id="text">send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</body>
+</html>
