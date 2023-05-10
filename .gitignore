@@ -1,0 +1,5 @@
+venv/
+.vscode
+.vscode/settings.json
+app/chat-db/notes.txt
+.DS_Store
