@@ -1,9 +1,6 @@
 body{
     font-family: 'Poppins', sans-serif;
     color: #252525;
-    /* background-color: #afd7e6; */
-    /* this one is cool  */
-    /* background-image: linear-gradient(to right, #b4c4ef, #9ad0e3); */
 }
 
 .material-symbols-outlined {
@@ -15,8 +12,6 @@ body{
 }
 
 #navbar{
-    /* background-color: whitesmoke;
-    opacity: 0.5; */
     color: #252525;
     font-weight: bolder;
 }
