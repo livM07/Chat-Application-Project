@@ -1,7 +1,7 @@
+from flask import render_template
 from app import app
 
 @app.route('/')
-@app.route('/index')
 def index():
     return "Hello World!"
 
@@ -10,5 +10,5 @@ def create():
     return "create account here"
 
 @app.route('/login', methods = ['POST'])
-def create():
+def login():
     return "login here"
