@@ -3,3 +3,4 @@ venv/
 .vscode/settings.json
 app/chat-db/notes.txt
 .DS_Store
+app/database/notes.txt
