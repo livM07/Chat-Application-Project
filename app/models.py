@@ -5,6 +5,8 @@ class user(db.Model):
     name = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text, nullable=False)
 
+    def __repr__(self):
+        return 'User: {}'.format(self.name, self.password)
 
 # will store messages as a JSON object in conv_json
 class conversations(db.Model):
