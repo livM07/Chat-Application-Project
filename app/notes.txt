@@ -1,7 +1,5 @@
 SCHEMA:
-CREATE TABLE users ( userID INTEGER PRIMARY KEY, name TEXT NOT NULL, password TEXT NOT NULL);
-CREATE TABLE conversations ( conversationID INTEGER PRIMARY KEY, title TEXT, conv_json TEXT, userID INTEGER, FOREIGN KEY (userID) REFERENCES users(userID));
-sqlite> 
+Table created from models -> located outside app file in base directory (might/might not be an issue later)
 
 CREATE TABLE alembic_version (
         version_num VARCHAR(32) NOT NULL, 
@@ -9,13 +7,15 @@ CREATE TABLE alembic_version (
 );
 CREATE TABLE user (
         "userID" INTEGER NOT NULL, 
-        name TEXT NOT NULL, 
-        password TEXT NOT NULL, 
-        PRIMARY KEY ("userID")
+        name VARCHAR(70) NOT NULL, 
+        email VARCHAR(150) NOT NULL, 
+        password VARCHAR(50) NOT NULL, 
+        PRIMARY KEY ("userID"), 
+        UNIQUE (email)
 );
 CREATE TABLE conversations (
         "conversationID" INTEGER NOT NULL, 
-        title TEXT NOT NULL, 
+        title VARCHAR(150) NOT NULL, 
         conv_json TEXT, 
         "userID" INTEGER NOT NULL, 
         PRIMARY KEY ("conversationID"), 
