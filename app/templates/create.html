@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="#" method="POST">
-    <input type="text" name="username" placeholder="Enter Username">
-    <input type="text" name="email" placeholder="Enter Email">
-    <input type="text" name="password" placeholder="Enter Password">
-    <input type="submit" value="submit">
-</form>
+<h1>Login</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=70) }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=70) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=70) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('create') }}">Click to Register!</a></p>
 {% endblock %}
