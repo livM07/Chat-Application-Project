@@ -11,4 +11,4 @@ class CreateForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Sign Up')
