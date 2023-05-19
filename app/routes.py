@@ -10,6 +10,10 @@ import json
 def home():
     return render_template("base.html", title="base")
 
+@app.route('/home')
+def history():
+      return render_template("home-page.html")
+
 @app.route('/history')
 @login_required
 def history():
