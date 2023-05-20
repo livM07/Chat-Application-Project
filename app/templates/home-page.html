@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- CAROUSEL -->
+    <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#imageCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#imageCarousel" data-slide-to="1"></li>
+        </ul>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="carousel-item-container">
+                    <img src="/static/images/paris.jpg" alt="Paris" class="img-fluid">
+                </div>
+            </div>ç
+            <div class="carousel-item">
+                <div class="carousel-item-container">
+                    <img src="/static/images/london.jpg" alt="London" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>About</h2>
+                <p>Unlock Your Perfect Journey.</p>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

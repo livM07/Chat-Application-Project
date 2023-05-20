@@ -7,8 +7,12 @@ import json
 
 # CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
-def home():
+def base():
     return render_template("base.html", title="base")
+
+@app.route('/home')
+def home():
+      return render_template("home-page.html")
 
 @app.route('/history')
 @login_required
