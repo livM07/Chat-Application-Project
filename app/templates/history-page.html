@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="history.css" rel="stylesheet">
+    <link href="/app/static/history.css/" rel="stylesheet">
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>Chat History</title>
@@ -24,39 +24,96 @@
     </nav>
 
     <!-- search form -->
-    <div class="container pt-5 pb-5">
-        <form class="form-inline rounded-pill" action="#">
-            <div class="form-group">
-                <input type="search" class="form-control mr-2 rounded-pill" id="search" placeholder="search history ..." name="search">
-                <button class="btn btn-outline-secondary rounded-pill" type="submit" id="search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                  </svg></button>
+    <div class="form-row ml-1" style="background-color: lightgrey;">
+        <div class="col-6" style="margin-left: 115px;">
+            <div class="container pt-5 pb-5">
+                <form class="form-inline rounded-pill" action="#">
+                    <input type="search" class="form-control mr-2 rounded-pill" id="search" placeholder="search history ..." name="search" style="width: 250px;">
+                    <button class="btn btn-outline-secondary rounded-pill" type="submit" id="search" style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">Search
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg></button>
+                    <button class="btn btn-outline-secondary rounded-pill" type="submit" id="search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                      </svg></button>
+                </form>
             </div>
-        </form>
+        </div>
+        <div class="col-2 ml-auto" style="margin-right: 110px;">
+            <div class="container pt-5 pb-5 ml-50">
+                <button type="submit" class="btn btn-primary mb-2" href="/chat">New Chat</button>
+            </div>
+        </div>
     </div>
 
-    <!-- new chat + history -->
+
     <div class="container">
-        <div class="card rounded-pill" id="new-chat">
-            <a href="#" class="card-link"><h5 class="card-title">+ New Chat</h5></a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="card rounded-pill">
-            <a href="#" class="card-link"><h5 class="card-title">Go To: Paris</h5></a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="card rounded-pill">
-            <a href="#" class="card-link"><h5 class="card-title">Go To: London</h5></a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="card rounded-pill">
-            <a href="#" class="card-link"><h5 class="card-title">Go To: Singapore</h5></a>
-        </div>
+        <h2>Travel Bot History</h2>
+        <p>Type something in the search bar to find a past chat.</p>  
+        <br>
+        <table class="">
+          <thead>
+            <!-- <tr>
+              <th>Chat Title</th>
+            </tr> -->
+          </thead>
+          <tbody id="historyTable" class="" style="border-collapse: separate;border-spacing:0 20px;">
+            </tr>
+            <tr class="card-title">
+              <td><div class="tableRows">London</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Paris</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Flights to Rome</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Singapore</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Best Greek Islands to visit</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Villas in Seminyak</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Berlin Food Tour</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Accommodation near Pompeii</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Sydney</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">US West Coast Roadtrip</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Accommodation near Pompeii</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Cities to visit in Ireland</div></td>
+            </tr>
+            <tr class="card-title">
+                <td><div class="tableRows">Backpacking through Europe</div></td>
+            </tr>
+          </tbody>
+        </table>
+        
     </div>
 
     
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+      $("#search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#historyTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+</script>
