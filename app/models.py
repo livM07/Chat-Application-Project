@@ -40,7 +40,7 @@ class conversations(db.Model):
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
     def __repr__(self):
-        return 'Conversation ID: {}, Title: {}, UserID: {}'.format(self.conversationID, self.title, self.userID)
+        return '"{}", "{}"'.format(self.conversationID, self.title)
 
     def get_id(self):
         return (self.conversationID)

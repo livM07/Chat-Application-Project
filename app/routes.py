@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = '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'
+openai.api_key = ''
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
@@ -110,14 +110,13 @@ def get_response():
 
 @app.route('/get_conversations', methods=['POST'])
 def get_conversations():
-    #location = request.form['location']
-    print('currentID',currentUserID)
-    #convs = conversations.query.filter_by(userID=currentUserID)
-    convs = select(conversations).where(conversations.userID == currentUserID)
-    
+    #location#= #request.form['location']#
+    #print('currentID',currentUserID)
+    convs = conversations.query.filter_by(userID=currentUserID).all()
+    str(convs)
     print(convs)
 
-    return "jeff"
+    return str(convs)
 
     
 

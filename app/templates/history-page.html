@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,114 +15,97 @@
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>Chat History</title>
+
+    <style>
+        .s {
+            border: 2px solid black;
+            margin-bottom: 10px;
+        }
+        .s:hover {
+            background-color: lightgray;
+        }
+    </style>
 </head>
-<body>
-    <!--nav bar-->
-    <nav class="navbar navbar-expand-lg" id="navbar">
+<body onload="getConversations(event)">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="col-4"></div>
         <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
-        <div class="col-4 text-right">Hi username</div>
+        <div class="col-4 text-right">Hi {{name}}<span id="username"></span></div>
     </nav>
-
-    <!-- search form -->
-    <div class="form-row ml-1" style="background-color: lightgrey;">
-        <div class="col-6" style="margin-left: 115px;">
-            <div class="container pt-5 pb-5">
-                <form class="form-inline rounded-pill" action="#">
-                    <input type="search" class="form-control mr-2 rounded-pill" id="search" placeholder="search history ..." name="search" style="width: 250px;">
-                    <button class="btn btn-outline-secondary rounded-pill" type="submit" id="search" style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">Search
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg></button>
-                    <button class="btn btn-outline-secondary rounded-pill" type="submit" id="search"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-                      </svg></button>
-                </form>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header row">
+                        <div class="col-8" style="font-size: xx-large; font-weight: bold; align-items: center;">Conversation History</div>
+                        <div class="col-4 form-inline justify-content-end">
+                            
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='/chat';">New Chat</button>
+                        </div>
+                    </div>
+                    <div class="card-body text-right" style="height: 500px; overflow: auto;">
+                        <div id="chat-log"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-2 ml-auto" style="margin-right: 110px;">
-            <div class="container pt-5 pb-5 ml-50">
-                <button type="submit" class="btn btn-primary mb-2" href="/chat">New Chat</button>
-            </div>
-        </div>
+        <div class="col-3"></div>
     </div>
-=======
-{% extends 'base.html' %}
-{% block content %}
->>>>>>> 00fdd3396aeb6428870c13a728b4a39a7d23a294
-
-
-    <div class="container">
-        <h2>Travel Bot History</h2>
-        <p>Type something in the search bar to find a past chat.</p>  
-        <br>
-        <table class="">
-          <thead>
-            <!-- <tr>
-              <th>Chat Title</th>
-            </tr> -->
-          </thead>
-          <tbody id="historyTable" class="" style="border-collapse: separate;border-spacing:0 20px;">
-            </tr>
-            <tr class="card-title">
-              <td><div class="tableRows">London</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Paris</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Flights to Rome</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Singapore</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Best Greek Islands to visit</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Villas in Seminyak</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Berlin Food Tour</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Accommodation near Pompeii</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Sydney</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">US West Coast Roadtrip</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Accommodation near Pompeii</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Cities to visit in Ireland</div></td>
-            </tr>
-            <tr class="card-title">
-                <td><div class="tableRows">Backpacking through Europe</div></td>
-            </tr>
-          </tbody>
-        </table>
-        
-    </div>
-
-<<<<<<< HEAD
     
 </body>
 </html>
 
-<script>
-    $(document).ready(function(){
-      $("#search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#historyTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+<script defer>
+    const chatLog = document.getElementById('chat-log');
+    function getConversations(event) {
+        event.preventDefault();
+
+        message = 'HI';
+        //location = 'italy';
+
+        fetch('/get_conversations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(response => response.text())
+        .then(reply => {
+
+            x = JSON.parse(reply)
+            console.log(x)
+
+            y = x.length
+            console.log(y)
+
+            for (var i=0; i<x.length/2; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.classList.add('row', 's', 'rounded-pill')
+                const col1 = document.createElement('div');
+                col1.classList.add('col-12', 'text-center')
+                const col2 = document.createElement('div');
+                //col2.classList.add('col-4')
+
+                col1.innerHTML = `<strong>${x[2*i+1]}</strong>`;
+
+                rowDiv.appendChild(col1)
+                rowDiv.appendChild(col2)
+                
+                rowDiv.value = x[2*i]
+
+                rowDiv.onclick = function(){alert("conversationID: " + rowDiv.value)}
+
+                if(x[2*i+1] != "") {
+                    chatLog.appendChild(rowDiv);
+                } 
+            }
+
         });
-      });
-    });
+    }
+
+    document.onload(getConversations(event))
+
 </script>
-=======
 {% endblock %}
->>>>>>> 00fdd3396aeb6428870c13a728b4a39a7d23a294
