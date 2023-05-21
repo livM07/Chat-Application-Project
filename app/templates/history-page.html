@@ -1,111 +1,26 @@
+{% extends 'base.html' %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- BOOTSTRAP + GOOGLE FONTS + ICONS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="/app/static/history.css/" rel="stylesheet">
-    <!-- JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <title>Chat History</title>
 
-    <style>
-        .s {
-            border: 2px solid black;
-            margin-bottom: 10px;
-        }
-        .s:hover {
-            background-color: lightgray;
-        }
-    </style>
-</head>
-<body onload="getConversations(event)">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="col-4"></div>
-        <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
-        <div class="col-4 text-right">Hi {{name}}<span id="username"></span></div>
-    </nav>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <div class="container mt-3">
-                <div class="card">
-                    <div class="card-header row">
-                        <div class="col-8" style="font-size: xx-large; font-weight: bold; align-items: center;">Conversation History</div>
-                        <div class="col-4 form-inline justify-content-end">
-                            
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='/chat';">New Chat</button>
-                        </div>
-                    </div>
-                    <div class="card-body text-right" style="height: 500px; overflow: auto;">
-                        <div id="chat-log"></div>
-                    </div>
-                </div>
-            </div>
+    <!-- new chat + history -->
+    <div class="container">
+        <div class="card rounded-pill" id="new-chat">
+            <a href="#" class="card-link"><h5 class="card-title">+ New Chat</h5></a>
         </div>
-        <div class="col-3"></div>
     </div>
-    
-</body>
-</html>
+    <div class="container">
+        <div class="card rounded-pill">
+            <a href="#" class="card-link"><h5 class="card-title">Go To: Paris</h5></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card rounded-pill">
+            <a href="#" class="card-link"><h5 class="card-title">Go To: London</h5></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card rounded-pill">
+            <a href="#" class="card-link"><h5 class="card-title">Go To: Singapore</h5></a>
+        </div>
+    </div>
 
-<script defer>
-    const chatLog = document.getElementById('chat-log');
-    function getConversations(event) {
-        event.preventDefault();
-
-        message = 'HI';
-        //location = 'italy';
-
-        fetch('/get_conversations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(response => response.text())
-        .then(reply => {
-
-            x = JSON.parse(reply)
-            console.log(x)
-
-            y = x.length
-            console.log(y)
-
-            for (var i=0; i<x.length/2; i++) {
-                const rowDiv = document.createElement('div');
-                rowDiv.classList.add('row', 's', 'rounded-pill')
-                const col1 = document.createElement('div');
-                col1.classList.add('col-12', 'text-center')
-                const col2 = document.createElement('div');
-                //col2.classList.add('col-4')
-
-                col1.innerHTML = `<strong>${x[2*i+1]}</strong>`;
-
-                rowDiv.appendChild(col1)
-                rowDiv.appendChild(col2)
-                
-                rowDiv.value = x[2*i]
-
-                rowDiv.onclick = function(){alert("conversationID: " + rowDiv.value)}
-
-                if(x[2*i+1] != "") {
-                    chatLog.appendChild(rowDiv);
-                } 
-            }
-
-        });
-    }
-
-    document.onload(getConversations(event))
-
-</script>
 {% endblock %}

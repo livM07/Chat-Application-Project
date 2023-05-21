@@ -15,7 +15,7 @@ class user(db.Model, UserMixin):
     password_hash = db.Column(db.String(128), nullable=False)
 
     def __repr__(self):
-        return 'User: {}{}{}{}'.format(self.name, self.password_hash, self.userID, self.email)
+        return 'User: {}'.format(self.name, self.password)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,12 +25,6 @@ class user(db.Model, UserMixin):
     
     def get_id(self):
         return (self.userID)
-    
-    def get_name(self):
-        return(self.name)
-    
-    def get_email(self):
-        return(self.email)
 
 # will store messages as a JSON object in conv_json
 class conversations(db.Model):
@@ -38,22 +32,4 @@ class conversations(db.Model):
     title = db.Column(db.String(150), nullable=False)
     conv_json = db.Column(db.Text)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
-
-    def __repr__(self):
-        return '"{}", "{}"'.format(self.conversationID, self.title)
-
-    def get_id(self):
-        return (self.conversationID)
-    
-    def get_title(self):
-        return(self.title)
-    
-    def get_json(self):
-        return(self.conv_json)
-    
-    def set_title(self, title):
-        self.title = title
-    
-    def set_json(self, json):
-        self.conv_json = json
 
