@@ -4,3 +4,6 @@ venv/
 app/chat-db/notes.txt
 .DS_Store
 app/database/notes.txt
+.chat
+__pycache__
+app/__pycache__
