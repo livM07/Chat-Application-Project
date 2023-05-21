@@ -5,7 +5,6 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import user
 import json
 
-# CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
     return render_template("base.html", title="base")
