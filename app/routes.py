@@ -37,21 +37,24 @@ def home():
 @app.route('/history')
 @login_required
 def history():
-      return render_template("history-page.html", name=currentUserName)
+      return render_template("history-page.html")
 
 @app.route('/chat')
+# @login_required
 def new_chat():
       empty_json = {
         "messages": []
       }
       conversation = conversations(title="", conv_json=json.dumps(empty_json), userID=currentUserID)
+
       db.session.add(conversation)
       db.session.commit()
       global conversationID
       conversationID = conversation.get_id()
-      return render_template("chat.html", name=currentUserName)
+      return render_template("chat.html")
 
 @app.route('/chat/<id>')
+# @login_required
 def chat(id):
       # todo: add check to see if id exists
       global conversationID
@@ -63,6 +66,7 @@ def chat(id):
        
     
 @app.route('/get_response', methods=['POST'])
+# @login_required
 def get_response():
     location = request.form['location']
     message = request.form['message']
@@ -139,7 +143,8 @@ def create():
          currentUser.set_password(form.password.data)
          db.session.add(currentUser)
          db.session.commit()
-         return redirect(url_for('login'))
+         session['username'] = currentUser.get_name()
+         return redirect(url_for('history'))
 
     return render_template("create.html", form=form)
 
@@ -157,6 +162,8 @@ def login():
           currentUserID = currentUser.get_id()
           print('currentuserid',currentUserID)
           currentUserName = currentUser.get_name()
+          session['username'] = currentUser.get_name()
+
           if currentUser is None:
             flash('email is not in DB')
             return redirect(url_for('login')) #delete when form validation is made
