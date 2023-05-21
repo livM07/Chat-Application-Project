@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="chat.css" rel="stylesheet">
+    <title>TravelBot</title>
+
+    <style>
+        .location-div {
+          display: block;
+        }
+      
+        .message-div {
+          display: none;
+        }
+      </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="col-4"></div>
+        <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
+        <div class="col-4 text-right">Hi <span id="username">{{name}}</span></div>
+    </nav>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header location-div">
+                        <div id="chat-title" style="color: red; font-size: large;"></div>
+                        <div id="location-container">
+                            <form id="location-form" class="form-inline justify-content-start rounded-pill" onsubmit="sendMessage(event)">
+                                <div class="form-group">
+                                    <input id="location-input" type="text" class="form-control mr-2 rounded-pill" placeholder="Enter a location..." name="text" autocomplete="off" autofocus>
+                                    <button id ="loc-button" class="btn btn-outline-secondary rounded-pill" type="location-submit" id="text">Choose</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 500px; overflow: auto;">
+                        <div id="chat-log"></div>
+                    </div>
+                    <div class="card-footer message-div" id="chat-container">
+                        <form id="chat-form" class="form-inline justify-content-end rounded-pill" onsubmit="sendMessage(event)">
+                            <div class="form-group">
+                                <input id="chat-input" type="text" class="form-control mr-2 rounded-pill" placeholder="Type a message..." name="text" autocomplete="off" autofocus>
+                                <button class="btn btn-outline-secondary rounded-pill" type="submit" id="text">send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+  
+    <!-- <div id="location-container" class="location-div">
+        <form id="location-form" onsubmit="sendMessage(event)">
+            <input id="location-input" type="text" placeholder="Enter a location..." autocomplete="off" autofocus>
+            <button id="loc-button" type="location-submit">Send</button>
+        </form>
+    </div> -->
+
+    <!-- <div id="chat-container" class="message-div">
+        
+        <form id="chat-form" onsubmit="sendMessage(event)">
+            <input id="chat-input" type="text" placeholder="Type a message..." autocomplete="off" autofocus>
+            <button type="submit">Send</button>
+        </form>
+    </div> -->
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const locationInput = document.getElementById('location-input');
+
+        const chatLog = document.getElementById('chat-log');
+        const chatTitle = document.getElementById('chat-title');
+
+        var locButton = document.getElementById("loc-button");
+        var locCon = document.getElementById("location-container");
+        var chatCon = document.getElementById("chat-container");
+
+        var username = document.getElementById("username").textContent;
+
+        locButton.addEventListener("click", function() {
+            setTitle(locationInput.value.trim());
+            locCon.style.display = "none";
+            chatCon.style.display = "block";
+        });
+
+        locloc = false;
+
+
+        //chatForm.addEventListener('submit', sendMessage);
+        chatForm.addEventListener('location-submit', locationLocked);
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const message = chatInput.value.trim();
+            const location = locationInput.value.trim();
+            if (message === '' || location === '') return;
+
+            //setTitle(location);
+            appendMessage(username, message);
+
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `message=${encodeURIComponent(message)}&location=${encodeURIComponent(location)}`
+            })
+            .then(response => response.text())
+            .then(reply => {
+                appendMessage('TravelBot', reply);
+                chatInput.value = '';
+            });
+        }
+
+        function locationLocked(event) {
+            locloc = true;
+        }
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<strong>${sender}: </strong>${message}`;
+            chatLog.appendChild(messageElement);
+        }
+
+        function setTitle(title) {
+            const titleElement = document.createElement('div');
+            titleElement.innerHTML = `<strong>${title}</strong>`;
+            chatTitle.appendChild(titleElement);
+        }
+    </script>
+</body>
+</html>
