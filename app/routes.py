@@ -14,14 +14,27 @@ MODEL_NAME = 'gpt-3.5-turbo'
 
 
 
-# CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
     return render_template("base.html", title="base")
 
-@app.route('/home')
+@app.route('/home', methods = ['GET','POST'])
 def home():
-      return render_template("home-page.html")
+    form = LoginForm()
+
+    if form.validate_on_submit():
+          currentUser = user.query.filter_by(email=form.email.data).first()
+          if currentUser is None:
+            flash('email is not in DB')
+            return redirect(url_for('home'))
+          elif not currentUser.check_password(form.password.data):
+               flash('password is incorrect')
+               return redirect(url_for('home'))
+          login_user(currentUser)
+          return redirect(url_for('history'))
+    else:
+        flash("unsuccessful")
+    return render_template('home-page.html', form=form)
 
 @app.route('/history')
 @login_required
@@ -172,4 +185,4 @@ def login():
 @app.route('/logout')
 def logout():
      logout_user()
-     return redirect(url_for('login'))
+     return redirect(url_for('home'))
