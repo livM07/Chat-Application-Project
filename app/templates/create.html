@@ -13,12 +13,30 @@
         <p>
             {{ form.name.label }}<br>
             {{ form.name(size=70) }}
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=70) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
     </form>
     <p>Already have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
+    {% with info = get_flashed_messages(category_filter=["info"]) %}
+        {% if errors %}
+            <div class="alert-message block-message info">
+                <a class="close" href="#">×</a>
+                <ul>
+                    {%- for msg in info %}
+                        <li>{{ msg }}</li>
+                    {% endfor -%}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
 {% endblock %}

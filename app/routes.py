@@ -7,12 +7,10 @@ import json
 import openai
 from sqlalchemy import select
 
-# OpenAI API key
-openai.api_key = ''
+# OpenAI API key -> might need to be in config file
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
-
-
 
 @app.route('/')
 def base():
@@ -39,11 +37,6 @@ def home():
 @app.route('/history')
 @login_required
 def history():
-      
-
-
-
-
       return render_template("history-page.html", name=currentUserName)
 
 @app.route('/chat')
@@ -65,6 +58,9 @@ def chat(id):
       conversationID = id
       return render_template("chat.html")
      
+     
+    
+       
     
 @app.route('/get_response', methods=['POST'])
 def get_response():
@@ -131,11 +127,6 @@ def get_conversations():
 
     return str(convs)
 
-    
-
-
-
-# WORKS!!
 @app.route('/create', methods = ['GET','POST'])
 def create():
     if current_user.is_authenticated:
@@ -148,12 +139,10 @@ def create():
          currentUser.set_password(form.password.data)
          db.session.add(currentUser)
          db.session.commit()
-         flash('Account created successfully!')
          return redirect(url_for('login'))
 
     return render_template("create.html", form=form)
 
-# WORKS!!
 @app.route('/login', methods = ['GET','POST'])
 def login():
     if current_user.is_authenticated:
@@ -170,7 +159,7 @@ def login():
           currentUserName = currentUser.get_name()
           if currentUser is None:
             flash('email is not in DB')
-            return redirect(url_for('login'))
+            return redirect(url_for('login')) #delete when form validation is made
           elif not currentUser.check_password(form.password.data):
                flash('password is incorrect')
                return redirect(url_for('login'))
