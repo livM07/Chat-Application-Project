@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = ''
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
@@ -144,13 +144,15 @@ def create():
 @app.route('/login', methods = ['GET','POST'])
 def login():
     if current_user.is_authenticated:
+        global currentUserName
+        currentUserName = current_user.name
         return redirect(url_for("history"))
 
     form = LoginForm()
 
     if form.validate_on_submit():
           global currentUserID
-          global currentUserName
+          #global currentUserName
           currentUser = user.query.filter_by(email=form.email.data).first()
           currentUserID = currentUser.get_id()
           print('currentuserid',currentUserID)
