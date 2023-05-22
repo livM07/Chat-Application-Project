@@ -15,7 +15,7 @@ MODEL_NAME = 'gpt-3.5-turbo'
 # CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
-    return render_template("base.html", title="base")
+    return redirect(url_for('home'))
 
 # Loads home page
 # LOGIN NOT WORKING FROM HOME PAGE
