@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="chat.css" rel="stylesheet">
+    <!-- <link href="chat.css" rel="stylesheet"> -->
     <title>TravelBot</title>
 
     <style>
         .location-div {
-          display: block;
+          /* display: block; */
         }
       
         .message-div {
@@ -33,15 +33,18 @@
         <div class="col-6">
             <div class="container mt-3">
                 <div class="card">
-                    <div class="card-header location-div">
-                        <div id="chat-title" style="color: red; font-size: large;"></div>
-                        <div id="location-container">
+                    <div class="card-header location-div row">
+                        <div id="chat-title" class ="col-8" style="color: red; font-size: x-large; font-weight: bold;"></div>
+                        <div id="location-container" class="col-8">
                             <form id="location-form" class="form-inline justify-content-start rounded-pill" onsubmit="sendMessage(event)">
                                 <div class="form-group">
                                     <input id="location-input" type="text" class="form-control mr-2 rounded-pill" placeholder="Enter a location..." name="text" autocomplete="off" autofocus>
                                     <button id ="loc-button" class="btn btn-outline-secondary rounded-pill" type="location-submit" id="text">Choose</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-4 form-inline justify-content-end" style="">
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='/history';">Back</button>
                         </div>
                     </div>
                     <div class="card-body" style="height: 500px; overflow: auto;">
@@ -92,9 +95,8 @@
         var username = document.getElementById("username").textContent;
 
         locButton.addEventListener("click", function() {
-            setTitle(locationInput.value.trim());
-            locCon.style.display = "none";
-            chatCon.style.display = "block";
+            var loc = locationInput.value.trim()
+            setTitle(loc);
         });
 
         locloc = false;
@@ -103,14 +105,28 @@
         //chatForm.addEventListener('submit', sendMessage);
         chatForm.addEventListener('location-submit', locationLocked);
 
+        console.log(window.location.pathname);
+        path = window.location.pathname;
+
+        pathElements = path.split('/');
+        if (pathElements.length == 3) {
+            console.log('hi')
+            getMessages(pathElements[2]);
+        }
+
         function sendMessage(event) {
+            console.log('hi');
             event.preventDefault();
             const message = chatInput.value.trim();
+            console.log(message);
             const location = locationInput.value.trim();
+            console.log(location);
             if (message === '' || location === '') return;
+            console.log('hey3');
 
             //setTitle(location);
             appendMessage(username, message);
+            console.log('hey');
 
             fetch('/get_response', {
                 method: 'POST',
@@ -124,6 +140,33 @@
                 appendMessage('TravelBot', reply);
                 chatInput.value = '';
             });
+        }
+
+        function getMessages(id) {
+            console.log('hi1')
+            fetch('/get_messages/' + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.text())
+            .then(reply => {
+                console.log('hi2');
+                console.log(reply);
+                x = JSON.parse(reply);
+                title = x[0];
+                msgs = x[1];
+
+                setTitle(title);
+                locationInput.value = title;
+                json = JSON.parse(msgs);
+                for (let i = 0; i < json.messages.length; i ++) {
+                    appendMessage(json.messages[i].author, json.messages[i].message);
+                }
+                //appendMessage('TravelBot', reply);
+            });
+
         }
 
         function locationLocked(event) {
@@ -140,6 +183,8 @@
             const titleElement = document.createElement('div');
             titleElement.innerHTML = `<strong>${title}</strong>`;
             chatTitle.appendChild(titleElement);
+            locCon.style.display = "none";
+            chatCon.style.display = "block";
         }
     </script>
 </body>
