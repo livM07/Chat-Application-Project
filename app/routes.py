@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = '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'
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
@@ -21,7 +21,25 @@ def base():
 
 @app.route('/home')
 def home():
-      return render_template("home-page.html")
+    form = LoginForm()
+
+    if form.validate_on_submit():
+          currentUser = user.query.filter_by(email=form.email.data).first()
+          if currentUser is None:
+            flash('email is not in DB')
+            return redirect(url_for('home'))
+          elif not currentUser.check_password(form.password.data):
+               flash('password is incorrect')
+               return redirect(url_for('home'))
+          login_user(currentUser)
+          global currentUserID
+          currentUserID = currentUser.get_id()
+          global currentUserName
+          currentUserName = current_user.name
+          return redirect(url_for('history'))
+    else:
+        flash("unsuccessful")
+    return render_template('home-page.html', form=form)
 
 @app.route('/history')
 @login_required
@@ -48,9 +66,11 @@ def new_chat():
 @app.route('/chat/<id>')
 def chat(id):
       # todo: add check to see if id exists
+      print('id:',id)
       global conversationID
+      #if id.isnumeric():
       conversationID = id
-      return render_template("chat.html")
+      return render_template("chat.html", name=currentUserName)
      
     
 @app.route('/get_response', methods=['POST'])
@@ -75,6 +95,7 @@ def get_response():
     
     reply = response.choices[0].message.content
 
+    print('convID',conversationID);
     conversationQuery = conversations.query.filter_by(conversationID=conversationID).first()
     conversationJSON = conversationQuery.get_json()
     conversationMessages = json.loads(conversationJSON)
@@ -83,6 +104,7 @@ def get_response():
     conversationMessages["messages"].append({"author": current_user.name, "message": message})
     conversationMessages["messages"].append({"author": "TravelBot", "message": reply})
     print(conversationMessages)
+    print('123')
 
     conv = conversations.query.filter_by(conversationID=conversationID).first()
     conv.set_title(location)
@@ -113,10 +135,17 @@ def get_conversations():
     #location#= #request.form['location']#
     #print('currentID',currentUserID)
     convs = conversations.query.filter_by(userID=currentUserID).all()
-    str(convs)
-    print(convs)
-
+    print(str(convs))
     return str(convs)
+
+@app.route('/get_messages/<id>', methods=['POST'])
+def get_messages(id):
+    messages = conversations.query.filter_by(conversationID=id).first()
+    messagesJSON = messages.get_json()
+    title = messages.get_title()
+    print(str(messagesJSON))
+    return [title, str(messagesJSON)]
+
 
     
 
@@ -172,4 +201,4 @@ def login():
 @app.route('/logout')
 def logout():
      logout_user()
-     return redirect(url_for('login'))
+     return redirect(url_for('home'))
