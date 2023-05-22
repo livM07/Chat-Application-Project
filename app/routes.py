@@ -115,7 +115,6 @@ def get_response():
 @app.route('/get_conversations', methods=['POST'])
 def get_conversations():
     convs = conversations.query.filter_by(userID=currentUserID).all()
-    print(str(convs))
     return str(convs)
 
 # Gets messages for chat page when loading a previous conversation 
@@ -124,7 +123,6 @@ def get_messages(id):
     messages = conversations.query.filter_by(conversationID=id).first()
     messagesJSON = messages.get_json()
     title = messages.get_title()
-    print(str(messagesJSON))
     return [title, str(messagesJSON)]
 
 # WORKS!!
