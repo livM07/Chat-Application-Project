@@ -32,6 +32,7 @@ def home():
           currentUser = user.query.filter_by(email=form.email.data).first()
           currentUserID = currentUser.get_id()
           currentUserName = currentUser.get_name()
+          session['username'] = currentUserName
 
           if currentUser is None:
             print('email is not in DB')
@@ -163,6 +164,7 @@ def login():
           currentUser = user.query.filter_by(email=form.email.data).first()
           currentUserID = currentUser.get_id()
           currentUserName = currentUser.get_name()
+          session['username'] = currentUserName
 
           if currentUser is None:
             flash('email is not in DB')
@@ -180,3 +182,9 @@ def login():
 def logout():
      logout_user()
      return redirect(url_for('home'))
+
+# testing if base template changes depending on if user is logged in
+@app.route('/test', methods = ['GET','POST'])
+def test():
+    form = LoginForm()
+    return render_template('base.html', form=form)
