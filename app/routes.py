@@ -60,10 +60,6 @@ def chat(id):
       global conversationID
       conversationID = id
       return render_template("chat.html")
-     
-     
-    
-       
     
 @app.route('/get_response', methods=['POST'])
 # @login_required
@@ -144,7 +140,7 @@ def create():
          db.session.add(currentUser)
          db.session.commit()
          session['username'] = currentUser.get_name()
-         return redirect(url_for('history'))
+         return redirect(url_for('home'))
 
     return render_template("create.html", form=form)
 

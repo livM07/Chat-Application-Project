@@ -26,7 +26,7 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Click to Login!</a></p>
+    <p>Already have an account? <a href="{{ url_for('home') }}">Click to Login!</a></p>
     {% with info = get_flashed_messages(category_filter=["info"]) %}
         {% if errors %}
             <div class="alert-message block-message info">
