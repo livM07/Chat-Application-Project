@@ -23,6 +23,7 @@
         }
         .s:hover {
             background-color: lightgray;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -39,9 +40,8 @@
             <div class="container mt-3">
                 <div class="card">
                     <div class="card-header row">
-                        <div class="col-8" style="font-size: xx-large; font-weight: bold; align-items: center;">Conversation History</div>
+                        <div class="col-8" style="font-size: x-large; font-weight: bold; align-items: center;">Conversation History</div>
                         <div class="col-4 form-inline justify-content-end">
-                            
                             <button type="button" class="btn btn-primary" onclick="window.location.href='/chat';">New Chat</button>
                         </div>
                     </div>
@@ -95,7 +95,8 @@
                 
                 rowDiv.value = x[2*i]
 
-                rowDiv.onclick = function(){alert("conversationID: " + rowDiv.value)}
+                //rowDiv.onclick = function(){alert("conversationID: " + rowDiv.value)}
+                rowDiv.onclick = function(){window.location.href='/chat/'+rowDiv.value}
 
                 if(x[2*i+1] != "") {
                     chatLog.appendChild(rowDiv);

@@ -8,27 +8,36 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = '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'
+openai.api_key = ''
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
-
-
+# CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
     return render_template("base.html", title="base")
 
-@app.route('/home', methods = ['GET','POST'])
+# Loads home page
+# LOGIN NOT WORKING FROM HOME PAGE
+@app.route('/home')
 def home():
+    # Makes current user variables global
+    global currentUserID
+    global currentUserName
+
     form = LoginForm()
 
     if form.validate_on_submit():
+          # Sets current user information
           currentUser = user.query.filter_by(email=form.email.data).first()
+          currentUserID = currentUser.get_id()
+          currentUserName = currentUser.get_name()
+
           if currentUser is None:
-            flash('email is not in DB')
+            print('email is not in DB')
             return redirect(url_for('home'))
           elif not currentUser.check_password(form.password.data):
-               flash('password is incorrect')
+               print('password is incorrect')
                return redirect(url_for('home'))
           login_user(currentUser)
           return redirect(url_for('history'))
@@ -36,16 +45,13 @@ def home():
         flash("unsuccessful")
     return render_template('home-page.html', form=form)
 
+# Displays a users previous conversations
 @app.route('/history')
 @login_required
 def history():
-      
-
-
-
-
       return render_template("history-page.html", name=currentUserName)
 
+# Creates a new conversation
 @app.route('/chat')
 def new_chat():
       empty_json = {
@@ -58,16 +64,17 @@ def new_chat():
       conversationID = conversation.get_id()
       return render_template("chat.html", name=currentUserName)
 
+# Loads a previous conversation
 @app.route('/chat/<id>')
 def chat(id):
-      # todo: add check to see if id exists
       global conversationID
       conversationID = id
-      return render_template("chat.html")
+      return render_template("chat.html", name=currentUserName)
      
-    
+# Gets ChatGPT response to users message
 @app.route('/get_response', methods=['POST'])
 def get_response():
+    # Get location and message input from chat page
     location = request.form['location']
     message = request.form['message']
 
@@ -85,55 +92,40 @@ def get_response():
         n=1,
         stop=None
     )
-    
     reply = response.choices[0].message.content
 
+    # Get the conversations previous messages 
     conversationQuery = conversations.query.filter_by(conversationID=conversationID).first()
     conversationJSON = conversationQuery.get_json()
     conversationMessages = json.loads(conversationJSON)
-    print(conversationMessages)
 
+    # Add new message and reply to previous ones
     conversationMessages["messages"].append({"author": current_user.name, "message": message})
     conversationMessages["messages"].append({"author": "TravelBot", "message": reply})
-    print(conversationMessages)
 
+    # Update changes in database
     conv = conversations.query.filter_by(conversationID=conversationID).first()
     conv.set_title(location)
     conv.set_json(json.dumps(conversationMessages))
     db.session.commit()
-
-    print(conv.get_json())
-
-    
-
-    # messages = {
-    #     "messages": [
-    #         {"author": current_user.name, "message": message},
-    #         {"author": "TravelBot", "message": reply}
-    #     ]
-    # }
-
-    # print(messages)
-    # m = json.dumps(messages)
-    # print(m) 
-
-    
     
     return reply
 
+# Gets conversations for the history page
 @app.route('/get_conversations', methods=['POST'])
 def get_conversations():
-    #location#= #request.form['location']#
-    #print('currentID',currentUserID)
     convs = conversations.query.filter_by(userID=currentUserID).all()
-    str(convs)
-    print(convs)
-
+    print(str(convs))
     return str(convs)
 
-    
-
-
+# Gets messages for chat page when loading a previous conversation 
+@app.route('/get_messages/<id>', methods=['POST'])
+def get_messages(id):
+    messages = conversations.query.filter_by(conversationID=id).first()
+    messagesJSON = messages.get_json()
+    title = messages.get_title()
+    print(str(messagesJSON))
+    return [title, str(messagesJSON)]
 
 # WORKS!!
 @app.route('/create', methods = ['GET','POST'])
@@ -156,20 +148,22 @@ def create():
 # WORKS!!
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    if current_user.is_authenticated:
-        global currentUserName
-        currentUserName = current_user.name
-        return redirect(url_for("history"))
+    # Makes current user variables global
+    global currentUserID
+    global currentUserName
+
+    # if current_user.is_authenticated:
+    #     currentUserName = current_user.name
+    #     return redirect(url_for("history"))
 
     form = LoginForm()
 
     if form.validate_on_submit():
-          global currentUserID
-          #global currentUserName
+          # Sets current user information
           currentUser = user.query.filter_by(email=form.email.data).first()
           currentUserID = currentUser.get_id()
-          print('currentuserid',currentUserID)
           currentUserName = currentUser.get_name()
+
           if currentUser is None:
             flash('email is not in DB')
             return redirect(url_for('login'))
