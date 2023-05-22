@@ -1,16 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms.validators import ValidationError, DataRequired
 from app.models import user
 
 # Create form -> checks if email is unique/already in db
-def validate_email(self, email):
+def validate_email_create(self, email):
     exists = user.query.filter_by(email=email.data).first()
     if exists:
         raise ValidationError("This email is already in use, either log in or use a different email.")
+    
+# Login form -> checks if email is unique/already in db
+def validate_email_login(self, email):
+    exists = user.query.filter_by(email=email.data).first()
+    if not exists:
+        raise ValidationError("Email incorrect.")
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired("email required")])
+    email = StringField('email', validators=[DataRequired("email required"), validate_email_login])
     password = PasswordField('password', validators=[DataRequired("password required")])
     submit = SubmitField('Sign In')
 
