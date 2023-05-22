@@ -18,32 +18,9 @@ def base():
     return render_template("base.html", title="base")
 
 # Loads home page
-# LOGIN NOT WORKING FROM HOME PAGE
 @app.route('/home')
 def home():
-    # Makes current user variables global
-    global currentUserID
-    global currentUserName
-
-    form = LoginForm()
-
-    if form.validate_on_submit():
-          # Sets current user information
-          currentUser = user.query.filter_by(email=form.email.data).first()
-          currentUserID = currentUser.get_id()
-          currentUserName = currentUser.get_name()
-
-          if currentUser is None:
-            print('email is not in DB')
-            return redirect(url_for('home'))
-          elif not currentUser.check_password(form.password.data):
-               print('password is incorrect')
-               return redirect(url_for('home'))
-          login_user(currentUser)
-          return redirect(url_for('history'))
-    else:
-        flash("unsuccessful")
-    return render_template('home-page.html', form=form)
+    return render_template('home-page.html', title="home")
 
 # Displays a users previous conversations
 @app.route('/history')
