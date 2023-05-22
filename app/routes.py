@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = ''
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
@@ -19,7 +19,7 @@ def base():
 
 # Loads home page
 # LOGIN NOT WORKING FROM HOME PAGE
-@app.route('/home')
+@app.route('/home', methods = ['GET','POST'])
 def home():
     # Makes current user variables global
     global currentUserID

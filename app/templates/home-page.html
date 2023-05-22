@@ -42,14 +42,20 @@
                                 <p>
                                     {{ form.email.label }}<br>
                                     {{ form.email(size=70) }}
+                                    {% for error in form.email.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
                                 </p>
                                 <p>
                                     {{ form.password.label }}<br>
                                     {{ form.password(size=70) }}
+                                    {% for error in form.password.errors %}
+                                        <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
                                 </p>
                                 <p>{{ form.submit() }}</p>
                             </form>
-                        <p>Don't have an account? <a href="{{ url_for('create') }}">Click to Register!</a></p>
+                            <p>Don't have an account? <a href="{{ url_for('create') }}">Click to Register!</a></p>
                         <div class="dropdown-divider"></div>
                     </div>
                 </div>
