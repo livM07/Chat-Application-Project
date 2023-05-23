@@ -12,13 +12,10 @@ openai.api_key = ''
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
-# CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
     return redirect(url_for('home'))
 
-# Loads home page
-# LOGIN NOT WORKING FROM HOME PAGE
 @app.route('/home', methods = ['GET','POST'])
 def home():
     # Makes current user variables global
@@ -126,7 +123,6 @@ def get_messages(id):
     title = messages.get_title()
     return [title, str(messagesJSON)]
 
-# WORKS!!
 @app.route('/create', methods = ['GET','POST'])
 def create():
     if current_user.is_authenticated:
@@ -140,7 +136,7 @@ def create():
          db.session.add(currentUser)
          db.session.commit()
          flash('Account created successfully!')
-         return redirect(url_for('login'))
+         return redirect(url_for('home'))
 
     return render_template("create.html", form=form)
 
