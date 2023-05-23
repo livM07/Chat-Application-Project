@@ -1,4 +1,4 @@
-{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,32 +14,46 @@
     <link href="/app/static/history.css/" rel="stylesheet">
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- history.js -->
+    <script src="static/js/history.js" defer></script>
+
     <title>Chat History</title>
 
     <style>
+        .rowStyling {
+            margin-left: 0px; 
+            margin-right: 0px; 
+            padding-left: 0px; 
+            padding-right: 0px;
+        }
+        .conversationElement {
+            font-size: large;
+            margin: 10px;
+        }
         .s {
-            border: 2px solid black;
-            margin-bottom: 10px;
+            /* border: 2px solid black; */
+            margin-bottom: 20px;
+            /* background-color: rgba(214, 214, 214, 0); */
         }
         .s:hover {
-            background-color: lightgray;
+            background-color:rgb(31, 86, 133);
             cursor: pointer;
         }
     </style>
 </head>
-<body onload="getConversations(event)">
+<body onload="getConversations(event)" style="background-color:lightgray">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border">
         <div class="col-4"></div>
         <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
         <div class="col-4 text-right">Hi {{name}}<span id="username"></span></div>
     </nav>
-    <div class="row">
+    <div class="row" style="background-color:lightgray">
         <div class="col-3"></div>
         <div class="col-6">
-            <div class="container mt-3">
+            <div class="container" style="margin-top: 30px;">
                 <div class="card">
-                    <div class="card-header row">
+                    <div class="card-header row" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px;">
                         <div class="col-8" style="font-size: x-large; font-weight: bold; align-items: center;">Conversation History</div>
                         <div class="col-4 form-inline justify-content-end">
                             <button type="button" class="btn btn-primary" onclick="window.location.href='/chat';">New Chat</button>
@@ -54,59 +68,12 @@
         <div class="col-3"></div>
     </div>
     
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <ul class="nav col-md-12 justify-content-center">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">&copy; TravelBot 2023 - Made by Lachlan Jones, Olivia Morrison & Safeer Karim</a></li>
+          </ul>
+        </footer>
+    </div>
 </body>
 </html>
-
-<script defer>
-    const chatLog = document.getElementById('chat-log');
-    function getConversations(event) {
-        event.preventDefault();
-
-        message = 'HI';
-        //location = 'italy';
-
-        fetch('/get_conversations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(response => response.text())
-        .then(reply => {
-
-            x = JSON.parse(reply)
-            console.log(x)
-
-            y = x.length
-            console.log(y)
-
-            for (var i=0; i<x.length/2; i++) {
-                const rowDiv = document.createElement('div');
-                rowDiv.classList.add('row', 's', 'rounded-pill')
-                const col1 = document.createElement('div');
-                col1.classList.add('col-12', 'text-center')
-                const col2 = document.createElement('div');
-                //col2.classList.add('col-4')
-
-                col1.innerHTML = `<strong>${x[2*i+1]}</strong>`;
-
-                rowDiv.appendChild(col1)
-                rowDiv.appendChild(col2)
-                
-                rowDiv.value = x[2*i]
-
-                //rowDiv.onclick = function(){alert("conversationID: " + rowDiv.value)}
-                rowDiv.onclick = function(){window.location.href='/chat/'+rowDiv.value}
-
-                if(x[2*i+1] != "") {
-                    chatLog.appendChild(rowDiv);
-                } 
-            }
-
-        });
-    }
-
-    document.onload(getConversations(event))
-
-</script>
-{% endblock %}
