@@ -26,6 +26,46 @@
         <div class="col-4"></div>
         <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
         <div class="col-4 text-right">
+            {% if current_user.is_authenticated %}
+                <!-- Hi {{ session['username'] }}<span id="username"></span></div> -->
+                <div class="dropdown">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hi {{ session['username'] }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+                            <p><a href="{{ url_for('logout') }}">Logout</a></p>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            {% else %}
+            <div class="dropdown">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+                        <form action="" method="post" novalidate>
+                            {{ form.hidden_tag() }}
+                            <p>
+                                {{ form.email.label }}<br>
+                                {{ form.email(size=70) }}
+                                {% for error in form.email.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p>
+                                {{ form.password.label }}<br>
+                                {{ form.password(size=70) }}
+                                {% for error in form.password.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p>{{ form.submit() }}</p>
+                        </form>
+                        <p>Don't have an account? <a href="{{ url_for('create') }}">Click to Register!</a></p>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </div>
+            {% endif %}
         </div> 
     </nav>
 
