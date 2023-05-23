@@ -8,14 +8,17 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = ''
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
+# CHANGED STATIC FOLDER -> TEMPLATES FOR TESTING. ADD STATIC BACK LATER.
 @app.route('/')
 def base():
     return redirect(url_for('home'))
 
+# Loads home page
+# LOGIN NOT WORKING FROM HOME PAGE
 @app.route('/home', methods = ['GET','POST'])
 def home():
     # Makes current user variables global
@@ -123,6 +126,7 @@ def get_messages(id):
     title = messages.get_title()
     return [title, str(messagesJSON)]
 
+# WORKS!!
 @app.route('/create', methods = ['GET','POST'])
 def create():
     if current_user.is_authenticated:
