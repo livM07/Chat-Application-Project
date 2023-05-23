@@ -140,7 +140,7 @@ def create():
          db.session.add(currentUser)
          db.session.commit()
          flash('Account created successfully!')
-         return redirect(url_for('login'))
+         return redirect(url_for('home'))
 
     return render_template("create.html", form=form)
 
