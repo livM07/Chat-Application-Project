@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = ''
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
