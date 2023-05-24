@@ -36,11 +36,12 @@ def home():
             return redirect(url_for('home'))
           elif not currentUser.check_password(form.password.data):
                print('password is incorrect')
-               return redirect(url_for('home'))
-          login_user(currentUser)
-          return redirect(url_for('history'))
-    else:
-        flash("unsuccessful")
+               flash('password is incorrect')
+            #    return redirect(url_for('home'))
+          else:
+            login_user(currentUser)
+            return redirect(url_for('history'))
+
     return render_template('home-page.html', form=form)
 
 # Displays a users previous conversations

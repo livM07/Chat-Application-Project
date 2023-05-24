@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="/app/static/history.css/" rel="stylesheet">
+    <link href="/static/css/style.css/" rel="stylesheet">
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- history.js -->
@@ -19,27 +19,6 @@
 
     <title>Chat History</title>
 
-    <style>
-        .rowStyling {
-            margin-left: 0px; 
-            margin-right: 0px; 
-            padding-left: 0px; 
-            padding-right: 0px;
-        }
-        .conversationElement {
-            font-size: large;
-            margin: 10px;
-        }
-        .s {
-            /* border: 2px solid black; */
-            margin-bottom: 20px;
-            /* background-color: rgba(214, 214, 214, 0); */
-        }
-        .s:hover {
-            background-color:rgb(31, 86, 133);
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body onload="getConversations(event)" style="background-color:lightgray">
 
@@ -48,18 +27,28 @@
         <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
         <div class="col-4 text-right"><p><a href="{{ url_for('logout') }}">Logout</a></p></div>
     </nav>
+    
     <div class="row" style="background-color:lightgray">
         <div class="col-3"></div>
         <div class="col-6">
             <div class="container" style="margin-top: 30px;">
                 <div class="card">
-                    <div class="card-header row" style="margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px;">
-                        <div class="col-8" style="font-size: x-large; font-weight: bold; align-items: center;">Conversation History</div>
+                    <div class="card-header row conversation-header">
+                        <div class="col-8" style="font-size: x-large; font-weight: bold; align-items: center; padding-left: 20px; padding-top: 5px; padding-bottom: 5px;">Conversation History</div>
                         <div class="col-4 form-inline justify-content-end">
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='/chat';">New Chat</button>
+                            <button type="button" class="btn btn-primary btn-radius" style="width: 140px; margin-right: 5px;" onclick="window.location.href='/chat';">New Chat</button>
                         </div>
                     </div>
-                    <div class="card-body text-right" style="height: 500px; overflow: auto;">
+                    <div class="card-header row" style="margin-left: 0px; margin-right: 0px; padding-left: 5px; padding-right: 0px;">
+                        <div class="col-6 form-inline">
+                            <input type="text" id="searchInput" class="form-control rounded-pill" style="width: 320px; height: 45px;" placeholder="Search">
+                        </div>
+                        <div class="col-6 form-inline justify-content-end">
+                            <button type="button" class="btn btn-warning btn-radius" style="width: 140px; margin-right: 10px;" onclick="filterChatLogs()">Search</button>
+                            <button type="button" class="btn btn-secondary btn-radius" style="width: 140px; margin-right: 5px;" onclick="resetSearch()">Reset</button>
+                        </div>
+                    </div>
+                    <div class="card-body text-right" style="height: 420px; overflow: auto;">
                         <div id="chat-log"></div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@
             <h1 class="col-4 text-center">Travel<span class="material-symbols-outlined">connecting_airports</span>Bot</h1>
             <div class="col-4 text-right">
                 <div class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn btn-primary btn-radius dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Login
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
@@ -49,9 +49,13 @@
                                 <p>
                                     {{ form.password.label }}<br>
                                     {{ form.password(size=70) }}
-                                    {% for error in form.password.errors %}
-                                        <span style="color: red;">[{{ error }}]</span>
-                                    {% endfor %}
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                {{ message }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
                                 </p>
                                 <p>{{ form.submit() }}</p>
                             </form>
