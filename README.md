@@ -40,8 +40,8 @@ To start the server via localhost:
 
 # Usage
 
-1. In your web browser open:
-    ```[http://localhost:5000](http://127.0.0.1:5000/home)```
+1. In your web browser open localhost:
+    ```http://127.0.0.1:5000```
 2. Once you have reached the home page click on the "Log In" button to either log in or create an account (note: once you create an account you will be redirected to the home page to log in)
 4. Once logged in, you will be redirected to the history page. This page will allow you to start a new chat, search/see past conversations and logout.
 5. To start a new chat click on the "new chat" button and enter a destination. To chat, use the message input form and the submit button. The "back" button saves your conversation and redirects you back to your history/user home page.
