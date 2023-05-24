@@ -29,7 +29,7 @@
             {% if current_user.is_authenticated %}
                 <!-- Hi {{ session['username'] }}<span id="username"></span></div> -->
                 <div class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn btn-primary btn-radius dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Hi {{ session['username'] }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
@@ -39,7 +39,7 @@
                 </div>
             {% else %}
             <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-primary btn-radius dropdown-toggle" href="#" role="button" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Login
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
