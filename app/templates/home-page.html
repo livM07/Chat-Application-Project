@@ -49,9 +49,13 @@
                                 <p>
                                     {{ form.password.label }}<br>
                                     {{ form.password(size=70) }}
-                                    {% for error in form.password.errors %}
-                                        <span style="color: red;">[{{ error }}]</span>
-                                    {% endfor %}
+                                    {% with messages = get_flashed_messages() %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                {{ message }}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endwith %}
                                 </p>
                                 <p>{{ form.submit() }}</p>
                             </form>
