@@ -8,7 +8,7 @@ import openai
 from sqlalchemy import select
 
 # OpenAI API key
-openai.api_key = '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'
+openai.api_key = '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'
 # OpenAI model 
 MODEL_NAME = 'gpt-3.5-turbo'
 
@@ -70,7 +70,7 @@ def new_chat():
 def chat(id):
       global conversationID
       conversationID = id
-      return render_template("chat.html", name=currentUserName)
+      return render_template("chat.html")
      
 # Gets ChatGPT response to users message
 @app.route('/get_response', methods=['POST'])
